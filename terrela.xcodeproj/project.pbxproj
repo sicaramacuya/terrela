@@ -9,17 +9,23 @@
 /* Begin PBXBuildFile section */
 		E93264EE269D281500DFAEFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93264ED269D281500DFAEFE /* AppDelegate.swift */; };
 		E93264F0269D281500DFAEFE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93264EF269D281500DFAEFE /* SceneDelegate.swift */; };
-		E93264F2269D281500DFAEFE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93264F1269D281500DFAEFE /* ViewController.swift */; };
+		E93264F2269D281500DFAEFE /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93264F1269D281500DFAEFE /* HomeVC.swift */; };
 		E93264F7269D281A00DFAEFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E93264F6269D281A00DFAEFE /* Assets.xcassets */; };
+		E9326506269D3A0100DFAEFE /* TitleStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9326505269D3A0100DFAEFE /* TitleStack.swift */; };
+		E9326508269D438B00DFAEFE /* SearchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9326507269D438B00DFAEFE /* SearchButton.swift */; };
+		E932650C269DA6CE00DFAEFE /* TestingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E932650B269DA6CE00DFAEFE /* TestingVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E93264EA269D281500DFAEFE /* terrela.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = terrela.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E93264ED269D281500DFAEFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E93264EF269D281500DFAEFE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E93264F1269D281500DFAEFE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E93264F1269D281500DFAEFE /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		E93264F6269D281A00DFAEFE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E93264FB269D281A00DFAEFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E9326505269D3A0100DFAEFE /* TitleStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleStack.swift; sourceTree = "<group>"; };
+		E9326507269D438B00DFAEFE /* SearchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchButton.swift; sourceTree = "<group>"; };
+		E932650B269DA6CE00DFAEFE /* TestingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,11 +60,62 @@
 			children = (
 				E93264ED269D281500DFAEFE /* AppDelegate.swift */,
 				E93264EF269D281500DFAEFE /* SceneDelegate.swift */,
-				E93264F1269D281500DFAEFE /* ViewController.swift */,
-				E93264F6269D281A00DFAEFE /* Assets.xcassets */,
 				E93264FB269D281A00DFAEFE /* Info.plist */,
+				E9326501269D2EBA00DFAEFE /* Home */,
+				E9326502269D2EFB00DFAEFE /* Resources */,
+				E9326509269DA67100DFAEFE /* Testing Ground */,
 			);
 			path = terrela;
+			sourceTree = "<group>";
+		};
+		E9326501269D2EBA00DFAEFE /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				E9326503269D2F7300DFAEFE /* View */,
+				E9326504269D30BB00DFAEFE /* Controller */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		E9326502269D2EFB00DFAEFE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E93264F6269D281A00DFAEFE /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E9326503269D2F7300DFAEFE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E9326505269D3A0100DFAEFE /* TitleStack.swift */,
+				E9326507269D438B00DFAEFE /* SearchButton.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E9326504269D30BB00DFAEFE /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E93264F1269D281500DFAEFE /* HomeVC.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		E9326509269DA67100DFAEFE /* Testing Ground */ = {
+			isa = PBXGroup;
+			children = (
+				E932650A269DA6A500DFAEFE /* Controller */,
+			);
+			path = "Testing Ground";
+			sourceTree = "<group>";
+		};
+		E932650A269DA6A500DFAEFE /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E932650B269DA6CE00DFAEFE /* TestingVC.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -129,9 +186,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E93264F2269D281500DFAEFE /* ViewController.swift in Sources */,
+				E9326508269D438B00DFAEFE /* SearchButton.swift in Sources */,
+				E93264F2269D281500DFAEFE /* HomeVC.swift in Sources */,
 				E93264EE269D281500DFAEFE /* AppDelegate.swift in Sources */,
+				E932650C269DA6CE00DFAEFE /* TestingVC.swift in Sources */,
 				E93264F0269D281500DFAEFE /* SceneDelegate.swift in Sources */,
+				E9326506269D3A0100DFAEFE /* TitleStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
