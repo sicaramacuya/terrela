@@ -9,9 +9,15 @@ import UIKit
 
 struct CategorySection: Section {
     // MARK: Properties
-    let numberOfItems = 3
+    let numberOfItems: Int
+    let items: ([Category], [imageName])
     
     // MARK: Methods
+    init(items: ([Category], [imageName])  ){
+        self.numberOfItems = items.0.count
+        self.items = items
+    }
+    
     func layoutSection() -> NSCollectionLayoutSection? {
         // item
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
@@ -32,6 +38,11 @@ struct CategorySection: Section {
     }
     
     func configureCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
-        collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CategoryCell.self), for: indexPath)
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CategoryCell.self), for: indexPath) as! CategoryCell
+        let category = ( items.0[indexPath.item], items.1[indexPath.item] )
+        cell.setContent(category: category)
+        
+        return cell
     }
 }

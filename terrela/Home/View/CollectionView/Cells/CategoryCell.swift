@@ -24,8 +24,6 @@ class CategoryCell: UICollectionViewCell {
         button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
         button.setTitleColor(.systemGray, for: .normal)
-        button.setImage(UIImage(systemName: "flame"), for: .normal)
-        button.setTitle("Rockets", for: .normal)
         button.layer.cornerRadius = 8
         button.layer.masksToBounds = true
 
@@ -60,8 +58,8 @@ class CategoryCell: UICollectionViewCell {
         print("Search button has been tapped.")
     }
     
-    func set(title: String, systemName: String) {
-        button.setTitle(title, for: .normal)
-        button.setImage(UIImage(systemName: systemName), for: .normal)
+    func setContent(category: (Category, imageName) ) {
+        button.setTitle(category.0.displayName(), for: .normal)
+        button.setImage(UIImage(systemName: category.1.rawValue), for: .normal)
     }
 }

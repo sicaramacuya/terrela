@@ -10,9 +10,11 @@ import UIKit
 class HomeVC: UIViewController {
     // MARK: Properties
     var collectionView: UICollectionView!
+    let categories: [Category] = [.astronomicalObjects, .missions, .rockets]
+    let imageName: [imageName] = [.astronomicalObjects, .missions, .rockets]
     lazy var sections: [Section] = [
         TitleSection(title: "What do you want to learn about?"),
-        CategorySection()
+        CategorySection(items: (categories, imageName))
     ]
     lazy var collectionViewLayout: UICollectionViewLayout = {
         var sections = self.sections
@@ -49,7 +51,7 @@ class HomeVC: UIViewController {
         
         // registering
         collectionView.register(TitleCell.self, forCellWithReuseIdentifier: TitleCell.identifier)
-        collectionView.register(TestingCategoryCell.self, forCellWithReuseIdentifier: TestingCategoryCell.identifier)
+        collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.identifier)
 
         // adding to the view
         self.view.addSubview(collectionView)
