@@ -40,7 +40,7 @@ class TitleStack: UIView {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Helvetica", size: 42)
+        label.font = UIFont.systemFont(ofSize: 42, weight: .regular)
         label.text = "Terrela"
         
         return label
@@ -48,7 +48,7 @@ class TitleStack: UIView {
     var dateLabel: UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Helvetica", size: 18)
+        label.font = UIFont.systemFont(ofSize: 18, weight: .regular)
         label.text = dateString
         
         return label
@@ -75,19 +75,18 @@ class TitleStack: UIView {
         // MARK: View's hierarchy
         homeView.addSubview(menuButton)
         homeView.addSubview(topStack)
-//        topStack.addArrangedSubview(menuButton)
         topStack.addArrangedSubview(titleLabel)
         topStack.addArrangedSubview(dateLabel)
         topStack.addArrangedSubview(searchButton)
         
         // MARK: Constraints
         NSLayoutConstraint.activate([
-            menuButton.topAnchor.constraint(equalTo: homeView.safeAreaLayoutGuide.topAnchor),
+            menuButton.topAnchor.constraint(equalTo: homeView.safeAreaLayoutGuide.topAnchor, constant: 10),
             menuButton.leadingAnchor.constraint(equalTo: homeView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             menuButton.heightAnchor.constraint(equalToConstant: 25),
             menuButton.widthAnchor.constraint(equalToConstant: 32),
             
-            topStack.topAnchor.constraint(equalTo: menuButton.bottomAnchor, constant: 20),
+            topStack.topAnchor.constraint(equalTo: menuButton.bottomAnchor, constant: 40),
             topStack.centerXAnchor.constraint(equalTo: homeView.centerXAnchor),
         ])
         
