@@ -11,7 +11,8 @@ Terrela aims to be powerful enough to answer any space related question. Additio
 
   
 ## 🛠 Skills 
-Swift, UIKit
+* Swift 
+* UIKit
 
   
 ## Lessons Learn
