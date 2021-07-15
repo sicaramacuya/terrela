@@ -13,11 +13,10 @@ Terrela aims to be powerful enough to answer any space related question. Additio
 ## 🛠 Skills 
 * Swift 
 * UIKit
-
   
 ## Lessons Learn
 
-Over the course of building this version I have strengthen my understanding UIKit and its components.
+Over the course of building this project I have strengthen my understanding UIKit and its components.
 
 **V0.1**
 
