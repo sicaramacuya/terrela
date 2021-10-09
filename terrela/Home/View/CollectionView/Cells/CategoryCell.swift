@@ -26,6 +26,7 @@ class CategoryCell: UICollectionViewCell {
         button.setTitleColor(.systemGray, for: .normal)
         button.layer.cornerRadius = 8
         button.layer.masksToBounds = true
+        button.isUserInteractionEnabled = false
 
         return button
     }()
