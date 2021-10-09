@@ -14,7 +14,12 @@ enum Category: String, CaseIterable {
     case pictureOfTheDay = "picture of the day"
     
     func displayName() -> String {
-        return self.rawValue.capitalized
+        switch self {
+        case .pictureOfTheDay:
+            return "Picture of the Day"
+        default:
+            return self.rawValue.capitalized
+        }
     }
 }
 

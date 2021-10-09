@@ -10,8 +10,8 @@ import UIKit
 class HomeVC: UIViewController {
     // MARK: Properties
     var collectionView: UICollectionView!
-    let categories: [Category] = [.astronomicalObjects, .missions, .rockets]
-    let imageName: [imageName] = [.astronomicalObjects, .missions, .rockets]
+    let categories: [Category] = [.pictureOfTheDay, .astronomicalObjects, .missions, .rockets]
+    let imageName: [imageName] = [.pictureOfTheDay, .astronomicalObjects, .missions, .rockets]
     lazy var sections: [Section] = [
         TitleSection(title: "What do you want to learn about?"),
         CategorySection(items: (categories, imageName))
@@ -33,6 +33,10 @@ class HomeVC: UIViewController {
         self.view.backgroundColor = .systemGray6
         TitleStack(homeView: self.view)
         setupCollectionView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     // MARK: Methods
@@ -89,7 +93,8 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
+        print(categories[indexPath.row].displayName())
+        self.navigationController?.pushViewController(PictureOfTheDayVC(), animated: true)
     }
 }
 
