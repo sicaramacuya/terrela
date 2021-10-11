@@ -94,7 +94,7 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(categories[indexPath.row].displayName())
-        self.navigationController?.pushViewController(PictureOfTheDayVC(), animated: true)
+        self.navigationController?.pushViewController(PictureListVC(), animated: true)
     }
 }
 

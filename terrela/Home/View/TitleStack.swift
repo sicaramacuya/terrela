@@ -13,7 +13,7 @@ class TitleStack: UIView {
     let date: Date = Date()
     var dateString: String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMM dd, yyy"
+        formatter.dateFormat = "MMMM dd, yyyy"
         
         return formatter.string(from: date)
     }

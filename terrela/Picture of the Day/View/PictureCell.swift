@@ -1,5 +1,5 @@
 //
-//  PictureOfTheDayTabelViewCell.swift
+//  PictureCell.swift
 //  terrela
 //
 //  Created by Eric Morales on 10/9/21.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PictureOfTheDayTabelViewCell: UITableViewCell {
+class PictureCell: UITableViewCell {
     
     // MARK: Properties
     static var identifier: String = "APOD Cell"
@@ -59,11 +59,6 @@ class PictureOfTheDayTabelViewCell: UITableViewCell {
     }()
     
     // MARK: Methods
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
@@ -79,7 +74,7 @@ class PictureOfTheDayTabelViewCell: UITableViewCell {
         self.setup()
     }
     
-    func setup() {
+    private func setup() {
         // Setting the color of the cell
         self.backgroundColor = .systemGray6
         

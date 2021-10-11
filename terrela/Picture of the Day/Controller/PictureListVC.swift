@@ -1,5 +1,5 @@
 //
-//  PictureOfTheDayVC.swift
+//  PictureListVC.swift
 //  terrela
 //
 //  Created by Eric Morales on 10/8/21.
@@ -7,14 +7,13 @@
 
 import UIKit
 
-class PictureOfTheDayVC: UIViewController {
+class PictureListVC: UIViewController {
 
     let testingTitles: [String] = ["Astronaut Akihiko Hoshide Conducts DNA Sequencing Aboard Station",
                                    "Liftoff of Landsat 9",
-                                   "The Double CLuster in Perseus",
+                                   "The Double Cluster in Perseus",
                                    "Baffin Bay, Greenland A Historical Perspective",
-                                   "Saturn at Night"
-    ]
+                                   "Saturn at Night"]
     
     // MARK: Properties
     lazy var table: UITableView = {
@@ -28,25 +27,26 @@ class PictureOfTheDayVC: UIViewController {
     // MARK: VC Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Picture of the Day"
         self.view.backgroundColor = .systemGray6
         
         setTable()
         updateList()
+        setSearchBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        
-        let search = UISearchController(searchResultsController: nil)
-        search.obscuresBackgroundDuringPresentation = false
-        search.searchBar.placeholder = "Search"
-        //search.searchBar.scopeButtonTitles = ["Title", "Day"]
-        navigationItem.searchController = search
+        self.title = "Picture of the Day"
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+    }
+    
+    
     // MARK: Methods
-    func setTable() {
+    private func setTable() {
         // Adding table to view.
         self.view.addSubview(table)
         
@@ -57,7 +57,7 @@ class PictureOfTheDayVC: UIViewController {
         table.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor).isActive = true
         
         // Letting table know we want to use the custom cell file.
-        table.register(PictureOfTheDayTabelViewCell.self, forCellReuseIdentifier: PictureOfTheDayTabelViewCell.identifier)
+        table.register(PictureCell.self, forCellReuseIdentifier: PictureCell.identifier)
         
         // Setting the delegate and dataSource.
         table.dataSource = self
@@ -66,35 +66,42 @@ class PictureOfTheDayVC: UIViewController {
         
     }
     
-    func updateList() {
+    private func updateList() {
         
     }
-
+    
+    private func setSearchBar() {
+        let search = UISearchController(searchResultsController: nil)
+        search.obscuresBackgroundDuringPresentation = false
+        search.searchBar.placeholder = "Search"
+        //search.searchBar.scopeButtonTitles = ["Title", "Day"]
+        navigationItem.searchController = search
+    }
 }
 
-extension PictureOfTheDayVC: UITableViewDataSource {
+extension PictureListVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: PictureOfTheDayTabelViewCell.identifier, for: indexPath) as! PictureOfTheDayTabelViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: PictureCell.identifier, for: indexPath) as! PictureCell
         
         
         cell.titleLabel.text = testingTitles[indexPath.row]
         
         return cell
     }
-    
+}
+
+extension PictureListVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("Row \(indexPath.row) selected.")
+        let detailVC = PictureVC()
+        self.navigationController?.pushViewController(detailVC, animated: true)
     }
-}
-
-extension PictureOfTheDayVC: UITableViewDelegate {
-    
 }
