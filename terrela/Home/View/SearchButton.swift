@@ -47,7 +47,7 @@ class SearchButton: UIButton {
         self.widthAnchor.constraint(equalTo: vcView.safeAreaLayoutGuide.widthAnchor, constant: -20).isActive = true
     }
     
-    @objc func goSearchPage() {
+    @objc private func goSearchPage() {
         print("Search button has been tapped.")
     }
     

@@ -8,16 +8,17 @@
 import UIKit
 
 class TitleStack: UIView {
+    
     // MARK: Properties
     var homeView: UIView!
-    let date: Date = Date()
-    var dateString: String {
+    lazy var date: Date = Date()
+    lazy var dateString: String = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM dd, yyyy"
         
         return formatter.string(from: date)
-    }
-    let menuButton: UIButton = {
+    }()
+    lazy var menuButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tintColor = .black
@@ -27,7 +28,7 @@ class TitleStack: UIView {
         
         return button
     }()
-    let topStack: UIStackView = {
+    lazy var topStack: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .vertical
@@ -37,7 +38,7 @@ class TitleStack: UIView {
         
         return stack
     }()
-    let titleLabel: UILabel = {
+    lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 42, weight: .regular)
@@ -45,14 +46,14 @@ class TitleStack: UIView {
         
         return label
     }()
-    var dateLabel: UILabel {
+    lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 18, weight: .regular)
         label.text = dateString
         
         return label
-    }
+    }()
     var searchButton: UIButton!
     
     // MARK: Methods
@@ -71,7 +72,7 @@ class TitleStack: UIView {
         self.setup(homeView: homeView)
     }
     
-    func setup(homeView: UIView) {
+    private func setup(homeView: UIView) {
         // MARK: View's hierarchy
         homeView.addSubview(menuButton)
         homeView.addSubview(topStack)
@@ -94,7 +95,7 @@ class TitleStack: UIView {
         menuButton.addTarget(self, action: #selector(self.openMenu), for: .touchUpInside)
     }
     
-    @objc func openMenu() {
+    @objc private func openMenu() {
         print("Menu button has been tapped.")
     }
 }

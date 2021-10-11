@@ -8,9 +8,10 @@
 import UIKit
 
 class TitleCell: UICollectionViewCell {
+    
     // MARK: Properties
     static var identifier: String = "TitleCell"
-    let label: UILabel = {
+    lazy var label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
@@ -29,15 +30,18 @@ class TitleCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup() {
-        // adding it to view
+    private func setup() {
+        
+        // MARK: View's hierarchy
         self.addSubview(label)
         
-        // constraints
-        label.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 5).isActive = true
-        label.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 10).isActive = true
-        label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
+        // MARK: Constraints
+        NSLayoutConstraint.activate([
+            label.topAnchor.constraint(equalTo: self.topAnchor),
+            label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 5),
+            label.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 10),
+            label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10)
+        ])
     }
     
     func set(title: String) {

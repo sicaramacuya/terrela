@@ -9,7 +9,7 @@ import UIKit
 
 class PictureListVC: UIViewController {
 
-    let testingTitles: [String] = ["Astronaut Akihiko Hoshide Conducts DNA Sequencing Aboard Station",
+    lazy var testingTitles: [String] = ["Astronaut Akihiko Hoshide Conducts DNA Sequencing Aboard Station",
                                    "Liftoff of Landsat 9",
                                    "The Double Cluster in Perseus",
                                    "Baffin Bay, Greenland A Historical Perspective",
@@ -47,23 +47,24 @@ class PictureListVC: UIViewController {
     
     // MARK: Methods
     private func setTable() {
-        // Adding table to view.
+        
+        // MARK: Setting Delegate and Data Source
+                table.dataSource = self
+                table.delegate = self
+        
+        // MARK: Registering
+                table.register(PictureCell.self, forCellReuseIdentifier: PictureCell.identifier)
+        
+        // MARK: View's Hierarchy
         self.view.addSubview(table)
         
-        // Constraints
-        table.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
-        table.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
-        table.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
-        table.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor).isActive = true
-        
-        // Letting table know we want to use the custom cell file.
-        table.register(PictureCell.self, forCellReuseIdentifier: PictureCell.identifier)
-        
-        // Setting the delegate and dataSource.
-        table.dataSource = self
-        table.delegate = self
-        
-        
+        // MARK: Constraints
+        NSLayoutConstraint.activate([
+            table.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+            table.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+            table.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
+            table.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor)
+        ])
     }
     
     private func updateList() {

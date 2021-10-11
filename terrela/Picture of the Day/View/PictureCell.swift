@@ -61,7 +61,6 @@ class PictureCell: UITableViewCell {
     // MARK: Methods
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -78,24 +77,26 @@ class PictureCell: UITableViewCell {
         // Setting the color of the cell
         self.backgroundColor = .systemGray6
         
-        // Add background to TableView
+        // MARK: View's Hierarchy
         self.contentView.addSubview(horizontalStackView)
         horizontalStackView.addArrangedSubview(image)
         horizontalStackView.addArrangedSubview(verticalStackView)
         verticalStackView.addArrangedSubview(titleLabel)
         verticalStackView.addArrangedSubview(dateLabel)
         
-        // Constraints
-        horizontalStackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10).isActive = true
-        horizontalStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10).isActive = true
-        horizontalStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 10).isActive = true
-        horizontalStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -10).isActive = true
-        
-        image.heightAnchor.constraint(equalTo: horizontalStackView.heightAnchor).isActive = true
-        image.widthAnchor.constraint(equalTo: image.heightAnchor).isActive = true
-        
-        verticalStackView.heightAnchor.constraint(equalTo: horizontalStackView.heightAnchor).isActive = true
-        titleLabel.heightAnchor.constraint(equalTo: horizontalStackView.heightAnchor, multiplier: 0.25).isActive = true
-        titleLabel.heightAnchor.constraint(equalTo: horizontalStackView.heightAnchor, multiplier: 0.75).isActive = true
+        // MARK: Constraints
+        NSLayoutConstraint.activate([
+            horizontalStackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10),
+            horizontalStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10),
+            horizontalStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 10),
+            horizontalStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -10),
+            
+            image.heightAnchor.constraint(equalTo: horizontalStackView.heightAnchor),
+            image.widthAnchor.constraint(equalTo: image.heightAnchor),
+            
+            verticalStackView.heightAnchor.constraint(equalTo: horizontalStackView.heightAnchor),
+            titleLabel.heightAnchor.constraint(equalTo: horizontalStackView.heightAnchor, multiplier: 0.25),
+            titleLabel.heightAnchor.constraint(equalTo: horizontalStackView.heightAnchor, multiplier: 0.75)
+        ])
     }
 }

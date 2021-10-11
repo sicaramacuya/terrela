@@ -1,5 +1,5 @@
 //
-//  CategoryCell.swift
+//  TestingCategoryCell.swift
 //  terrela
 //
 //  Created by Eric Morales on 7/13/21.
@@ -7,12 +7,14 @@
 
 import UIKit
 
-class CategoryCell: UICollectionViewCell {
+class TestingCategoryCell: UICollectionViewCell {
     
     // MARK: Properties
-    static var identifier: String = "CategoryCell"
-    lazy var imageSize: CGSize = CGSize(width: 20, height: 20)
-    lazy var button: UIButton = {
+    static var identifier: String = "TestingCategoryCell"
+    
+    
+    let imageSize: CGSize = CGSize(width: 20, height: 20)
+    var button: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .systemGray4
@@ -21,13 +23,15 @@ class CategoryCell: UICollectionViewCell {
         button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
         button.setTitleColor(.systemGray, for: .normal)
+        button.setImage(UIImage(systemName: "flame"), for: .normal)
+        button.setTitle("Rockets", for: .normal)
         button.layer.cornerRadius = 8
         button.layer.masksToBounds = true
-        button.isUserInteractionEnabled = false
 
         return button
     }()
 
+    
     // MARK: Methods
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,9 +42,8 @@ class CategoryCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setup() {
-        
-        // MARK: View's Hierarchy
+    func setup() {
+        // MARK: Constrains
         self.addSubview(button)
  
         // MARK: Constraints
@@ -55,9 +58,5 @@ class CategoryCell: UICollectionViewCell {
     @objc func goSearchPage() {
         print("Search button has been tapped.")
     }
-    
-    func setContent(category: (Category, imageName) ) {
-        button.setTitle(category.0.displayName(), for: .normal)
-        button.setImage(UIImage(systemName: category.1.rawValue), for: .normal)
-    }
 }
+

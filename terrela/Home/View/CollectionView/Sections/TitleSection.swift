@@ -39,5 +39,4 @@ struct TitleSection: Section {
         
         return cell
     }
-    
 }
