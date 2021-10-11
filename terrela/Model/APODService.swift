@@ -14,10 +14,11 @@ class NasaApiRequest {
 }
 
 class APODRequest: NasaApiRequest, Request {
-  typealias ResponseType = APOD
+  typealias ResponseType = [APOD]
 
   func getParams() -> [String: String] {
     return [
+        "api_key": "\(token)",
         "count": "10"
     ]
   }
@@ -34,7 +35,6 @@ class APODRequest: NasaApiRequest, Request {
     return [
       "Accept": "application/json",
       "Content-Type": "application/json",
-      "Authorization": "Bearer \(token)"
     ]
   }
 }
@@ -48,8 +48,8 @@ class APODService {
     let request = APODRequest()
     networking.send(request) { result in
       switch result {
-      case .success(let picture):
-        completion(.success(picture))
+      case .success(let pictures):
+        completion(.success(pictures))
       case .failure(let error):
         completion(.failure(error))
       }
