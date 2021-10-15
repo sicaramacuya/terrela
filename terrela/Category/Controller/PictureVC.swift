@@ -60,7 +60,7 @@ class PictureVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = .systemTeal
+        self.view.backgroundColor = .systemGray6
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = UIBarButtonItem()
         
         setup()
@@ -80,9 +80,9 @@ class PictureVC: UIViewController {
         let safeArea = self.view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
 
-            image.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
-            image.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0),
-            image.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0),
+            image.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 24),
+            image.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -24),
+            image.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 0),
             image.heightAnchor.constraint(equalTo: image.widthAnchor),
             
             registerButton.heightAnchor.constraint(equalToConstant: 50),
