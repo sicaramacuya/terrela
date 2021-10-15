@@ -30,6 +30,15 @@ struct Mission {
     let infoURL: URL?
     //let wikiURL: URL?
     
+    func formatDate(stringDate: String) -> String {
+        let dateFormatterStringToDate = ISO8601DateFormatter()
+        let date = dateFormatterStringToDate.date(from: stringDate)
+
+        let dateFormatterDateToString = DateFormatter()
+        dateFormatterDateToString.dateFormat = "MMMM dd, yyyy"
+
+        return dateFormatterDateToString.string(from: date!)
+    }
 }
 
 struct Agencie {

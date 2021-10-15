@@ -10,17 +10,40 @@ import UIKit
 class PictureCell: UITableViewCell {
     
     // MARK: Properties
-    static var identifier: String = "APOD Cell"
-    var pictureOfTheDay: APOD? {
+    static var identifier: String = "Category Cell"
+    lazy var pictureOfTheDay: APOD? = nil {
         didSet {
             guard let picture = self.pictureOfTheDay else { return }
             
             self.titleLabel.text = picture.title
             self.dateLabel.text = picture.formatDate(stringDate: picture.date)
             
-            self.updatePreviewImage(for: picture)
+            self.updatePreviewImage(url: picture.url)
         }
     }
+    lazy var mission: Mission? = nil {
+        didSet {
+            guard let mission = self.mission else { return }
+
+            self.titleLabel.text = mission.name
+            
+            self.updatePreviewImage(url: mission.imageURL)
+            
+            guard let startDate = mission.startDate else { return }
+            self.dateLabel.text = "Starting date: \(startDate)"
+        }
+    }
+    lazy var rocket: Rocket? = nil {
+        didSet {
+            guard let rocket = self.rocket else { return }
+            
+            self.titleLabel.text = rocket.name
+            self.dateLabel.text = "Is still in use? \(rocket.rocketConfig.isBeingUsed ? "Yes" : "No" )"
+            
+            self.updatePreviewImage(url: rocket.rocketConfig.imageURL)
+        }
+    }
+    
     var previewImageID: UUID?
     lazy var horizontalStackView: UIStackView = {
         let stackView = UIStackView(frame: .zero)
@@ -112,11 +135,12 @@ class PictureCell: UITableViewCell {
         ])
     }
     
-    private func updatePreviewImage(for pictureOfTheDay: APOD) {
+    private func updatePreviewImage(url: URL) {
         let previewImageID = UUID()
         self.previewImageID = previewImageID
+        
         DispatchQueue.global().async { [weak self] in
-            guard let data = try? Data(contentsOf: pictureOfTheDay.url) else { return }
+            guard let data = try? Data(contentsOf: url) else { return }
             
             let image = UIImage(data: data)
             

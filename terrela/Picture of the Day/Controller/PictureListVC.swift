@@ -10,6 +10,7 @@ import UIKit
 class PictureListVC: UIViewController {
     
     // MARK: Properties
+    var category: Category?
     lazy var table: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
@@ -22,12 +23,19 @@ class PictureListVC: UIViewController {
             table.reloadData()
         }
     }
-    lazy var networkManager = APODService()
+    lazy var rockets: [Rocket] = [] {
+        didSet {
+            table.reloadData()
+        }
+    }
+    lazy var missions: [Mission] = [] {
+        didSet {
+            table.reloadData()
+        }
+    }
     
-    // TESTING
-    lazy var rockets: [Rocket] = []
-    lazy var missions: [Mission] = []
-    lazy var networkManagerLLS = LaunchLibraryService()
+    lazy var networkManagerNASA = APODService()
+    lazy var networkManagerLaunchLibrary = LaunchLibraryService()
     
     // MARK: VC Lifecycle
     override func viewDidLoad() {
@@ -35,8 +43,8 @@ class PictureListVC: UIViewController {
         self.view.backgroundColor = .systemGray6
         
         setTable()
-        updateList()
-        setSearchBar()
+        updateList(category: self.category!)
+        // setSearchBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -72,37 +80,40 @@ class PictureListVC: UIViewController {
         ])
     }
     
-    private func updateList() {
-        networkManager.getPictureOfTheDay { result in
-            switch result {
-            case let .success(picturesOfTheDay):
-                self.picturesOfTheDay = picturesOfTheDay.reversed()
-            case let .failure(error):
-                print(error)
+    private func updateList(category: Category) {
+        switch category {
+        case .pictureOfTheDay:
+            networkManagerNASA.getPictureOfTheDay { result in
+                switch result {
+                case let .success(picturesOfTheDay):
+                    self.picturesOfTheDay = picturesOfTheDay.reversed()
+                case let .failure(error):
+                    print(error)
+                    print("Error occured with getting the pictures.")
+                }
             }
-        }
-        
-        
-        
-        // TESTING
-        networkManagerLLS.getMissions { result in
-            switch result {
-            case .success(let missions):
-                self.missions = missions
-            case .failure(let error):
-                print(error)
-                print("Error occured with getting the missions.")
+        case .missions:
+            networkManagerLaunchLibrary.getMissions { result in
+                switch result {
+                case .success(let missions):
+                    self.missions = missions
+                case .failure(let error):
+                    print(error)
+                    print("Error occured with getting the missions.")
+                }
             }
-        }
-        
-        networkManagerLLS.getRockets { result in
-            switch result {
-            case .success(let rockets):
-                self.rockets = rockets
-            case .failure(let error):
-                print(error)
-                print("Error occured with getting the rockets.")
+        case .rockets:
+            networkManagerLaunchLibrary.getRockets { result in
+                switch result {
+                case .success(let rockets):
+                    self.rockets = rockets
+                case .failure(let error):
+                    print(error)
+                    print("Error occured with getting the rockets.")
+                }
             }
+        default:
+            print("")
         }
     }
     
@@ -117,15 +128,41 @@ class PictureListVC: UIViewController {
 
 extension PictureListVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return picturesOfTheDay.count
+        switch category {
+        case .pictureOfTheDay:
+            return picturesOfTheDay.count
+        case .missions:
+            return missions.count
+        case .rockets:
+            return rockets.count
+        default:
+            return 10
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PictureCell.identifier, for: indexPath) as! PictureCell
-        let picture = picturesOfTheDay[indexPath.row]
-        cell.pictureOfTheDay = picture
         
-        return cell
+        switch category {
+        case .pictureOfTheDay:
+            let picture = self.picturesOfTheDay[indexPath.row]
+            cell.pictureOfTheDay = picture
+            
+            return cell
+        case .missions:
+            let mission = self.missions[indexPath.row]
+            cell.mission = mission
+            
+            return cell
+        case .rockets:
+            let rocket = self.rockets[indexPath.row]
+            cell.rocket = rocket
+            
+            return cell
+        default:
+            return cell
+        }
+        
     }
 }
 
@@ -137,7 +174,18 @@ extension PictureListVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("Row \(indexPath.row) selected.")
         let pictureVC = PictureVC()
-        pictureVC.pictureOfTheDay = picturesOfTheDay[indexPath.row]
+        pictureVC.category = self.category
+        
+        switch category {
+        case .pictureOfTheDay:
+            pictureVC.pictureOfTheDay = self.picturesOfTheDay[indexPath.row]
+        case .missions:
+            pictureVC.mission = self.missions[indexPath.row]
+        case .rockets:
+            pictureVC.rocket = rockets[indexPath.row]
+        default:
+            print("TableView DidSelect Default")
+        }
         
         self.navigationController?.pushViewController(pictureVC, animated: true)
     }

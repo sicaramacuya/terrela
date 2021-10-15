@@ -10,8 +10,8 @@ import UIKit
 class HomeVC: UIViewController {
     
     // MARK: Properties
-    lazy var categories: [Category] = [.pictureOfTheDay, .astronomicalObjects, .missions, .rockets]
-    lazy var imageName: [imageName] = [.pictureOfTheDay, .astronomicalObjects, .missions, .rockets]
+    lazy var categories: [Category] = [.pictureOfTheDay, .missions, .rockets]
+    lazy var imageName: [imageName] = [.pictureOfTheDay, .missions, .rockets]
     lazy var sections: [Section] = [
         TitleSection(title: "What do you want to learn about?"),
         CategorySection(items: (categories, imageName))
@@ -94,7 +94,10 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(categories[indexPath.row].displayName())
-        self.navigationController?.pushViewController(PictureListVC(), animated: true)
+        
+        let categoryListVC = PictureListVC()
+        categoryListVC.category = categories[indexPath.row]
+        self.navigationController?.pushViewController(categoryListVC, animated: true)
     }
 }
 

@@ -10,13 +10,29 @@ import UIKit
 class PictureVC: UIViewController {
     
     // MARK: Properties
-    var pictureOfTheDay: APOD? {
+    var category: Category?
+    lazy var pictureOfTheDay: APOD? = nil {
         didSet {
             guard let picture = self.pictureOfTheDay else { return }
             
-            self.updateImage(for: picture)
+            self.updateImage(url: picture.url)
         }
     }
+    lazy var mission: Mission? = nil {
+        didSet {
+            guard let mission = self.mission else { return }
+            
+            self.updateImage(url: mission.imageURL)
+        }
+    }
+    lazy var rocket: Rocket? = nil {
+        didSet {
+            guard let rocket = self.rocket else { return }
+            
+            self.updateImage(url: rocket.rocketConfig.imageURL)
+        }
+    }
+    
     var previewImageID: UUID?
     lazy var image: UIImageView = {
         let image = UIImageView()
@@ -76,11 +92,12 @@ class PictureVC: UIViewController {
         ])
     }
     
-    private func updateImage(for pictureOfTheDay: APOD) {
+    private func updateImage(url: URL) {
         let previewImageID = UUID()
         self.previewImageID = previewImageID
+        
         DispatchQueue.global().async { [weak self] in
-            guard let data = try? Data(contentsOf: pictureOfTheDay.url) else { return }
+            guard let data = try? Data(contentsOf: url) else { return }
             
             let image = UIImage(data: data)
             
@@ -94,9 +111,20 @@ class PictureVC: UIViewController {
     }
     
     @objc private func presentModalController() {
-        let vc = PictureDetailsVC()
-        vc.pictureOfTheDay = self.pictureOfTheDay
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: false)
+        let detailVC = PictureDetailsVC()
+        detailVC.modalPresentationStyle = .overCurrentContext
+        
+        switch category {
+        case .pictureOfTheDay:
+            detailVC.pictureOfTheDay = self.pictureOfTheDay
+        case .missions:
+            detailVC.mission = self.mission
+        case .rockets:
+            detailVC.rocket = self.rocket
+        default:
+            print("Present Modal Controller - Default Switch Case")
+        }
+        
+        self.present(detailVC, animated: false)
     }
 }

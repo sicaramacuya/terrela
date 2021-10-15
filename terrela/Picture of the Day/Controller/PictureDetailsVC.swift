@@ -10,15 +10,36 @@ import UIKit
 class PictureDetailsVC: UIViewController {
     
     // MARK: Properties
-    var pictureOfTheDay: APOD? {
+    lazy var pictureOfTheDay: APOD? = nil {
         didSet {
             guard let picture = self.pictureOfTheDay else { return }
             
-             dateLabel.text = picture.formatDate(stringDate: picture.date)
+            dateLabel.text = picture.formatDate(stringDate: picture.date)
             titleLabel.text = picture.title
             explanationLabel.text = picture.explanation
         }
     }
+    lazy var mission: Mission? = nil {
+        didSet {
+            guard let mission = self.mission else { return }
+            
+            titleLabel.text = mission.name
+            explanationLabel.text = mission.description
+            
+            guard let startDate = mission.startDate else { return }
+            dateLabel.text = mission.formatDate(stringDate: startDate)
+        }
+    }
+    lazy var rocket: Rocket? = nil {
+        didSet {
+            guard let rocket = self.rocket else { return }
+            
+            dateLabel.text = "Is still in use? \(rocket.rocketConfig.isBeingUsed ? "Yes" : "No" )"
+            titleLabel.text = rocket.name
+            explanationLabel.text = rocket.description
+        }
+    }
+    
     let maxDimmedAlpha: CGFloat = 0.6 // Alpha component for dimmedView
     let defaultHeight: CGFloat = 300 // At the height the modal opens to
     let dismissibleHeight: CGFloat = 200 // Hight where the modal is automatically dismiss
