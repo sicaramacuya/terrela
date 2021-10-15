@@ -98,7 +98,7 @@
 				E93264EF269D281500DFAEFE /* SceneDelegate.swift */,
 				E93264FB269D281A00DFAEFE /* Info.plist */,
 				E9326501269D2EBA00DFAEFE /* Home */,
-				E9ED40062711418D00907AC7 /* Picture of the Day */,
+				E9ED40062711418D00907AC7 /* Category */,
 				E9326502269D2EFB00DFAEFE /* Resources */,
 				E9D9A3D7269F5E7700F97482 /* Model */,
 				E9326509269DA67100DFAEFE /* Testing Ground */,
@@ -225,13 +225,13 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		E9ED40062711418D00907AC7 /* Picture of the Day */ = {
+		E9ED40062711418D00907AC7 /* Category */ = {
 			isa = PBXGroup;
 			children = (
 				E9ED4008271141D900907AC7 /* View */,
 				E9ED4007271141CB00907AC7 /* Controller */,
 			);
-			path = "Picture of the Day";
+			path = Category;
 			sourceTree = "<group>";
 		};
 		E9ED4007271141CB00907AC7 /* Controller */ = {
