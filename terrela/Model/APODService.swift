@@ -19,7 +19,7 @@ class APODRequest: NasaApiRequest, Request {
   func getParams() -> [String: String] {
     return [
         "api_key": "\(token)",
-        "count": "10"
+        "start_date": "2021-10-1"
     ]
   }
 

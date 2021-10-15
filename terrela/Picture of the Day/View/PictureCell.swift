@@ -11,6 +11,17 @@ class PictureCell: UITableViewCell {
     
     // MARK: Properties
     static var identifier: String = "APOD Cell"
+    var pictureOfTheDay: APOD? {
+        didSet {
+            guard let picture = self.pictureOfTheDay else { return }
+            
+            self.titleLabel.text = picture.title
+            self.dateLabel.text = picture.formatDate(stringDate: picture.date)
+            
+            self.updatePreviewImage(for: picture)
+        }
+    }
+    var previewImageID: UUID?
     lazy var horizontalStackView: UIStackView = {
         let stackView = UIStackView(frame: .zero)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -22,10 +33,11 @@ class PictureCell: UITableViewCell {
         
         return stackView
     }()
-    lazy var image: UIImageView = {
+    lazy var previewImage: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.contentMode = .scaleToFill
+        image.contentMode = .scaleAspectFill
+        image.layer.cornerRadius = 6
         image.clipsToBounds = true
         image.image = UIImage(named: "placeholder")
         
@@ -79,7 +91,7 @@ class PictureCell: UITableViewCell {
         
         // MARK: View's Hierarchy
         self.contentView.addSubview(horizontalStackView)
-        horizontalStackView.addArrangedSubview(image)
+        horizontalStackView.addArrangedSubview(previewImage)
         horizontalStackView.addArrangedSubview(verticalStackView)
         verticalStackView.addArrangedSubview(titleLabel)
         verticalStackView.addArrangedSubview(dateLabel)
@@ -91,12 +103,37 @@ class PictureCell: UITableViewCell {
             horizontalStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 10),
             horizontalStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -10),
             
-            image.heightAnchor.constraint(equalTo: horizontalStackView.heightAnchor),
-            image.widthAnchor.constraint(equalTo: image.heightAnchor),
+            previewImage.heightAnchor.constraint(equalTo: horizontalStackView.heightAnchor),
+            previewImage.widthAnchor.constraint(equalTo: previewImage.heightAnchor),
             
             verticalStackView.heightAnchor.constraint(equalTo: horizontalStackView.heightAnchor),
             titleLabel.heightAnchor.constraint(equalTo: horizontalStackView.heightAnchor, multiplier: 0.25),
             titleLabel.heightAnchor.constraint(equalTo: horizontalStackView.heightAnchor, multiplier: 0.75)
         ])
+    }
+    
+    private func updatePreviewImage(for pictureOfTheDay: APOD) {
+        let previewImageID = UUID()
+        self.previewImageID = previewImageID
+        DispatchQueue.global().async { [weak self] in
+            guard let data = try? Data(contentsOf: pictureOfTheDay.url) else { return }
+            
+            let image = UIImage(data: data)
+            
+            guard let self = self else { return }
+            guard self.previewImageID == previewImageID else { return }
+            
+            DispatchQueue.main.async {
+                self.previewImage.image = image
+            }
+        }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.previewImage.image = UIImage(named: "placeholder")
+        self.previewImageID = nil
+        self.titleLabel.text = nil
+        self.dateLabel.text = nil
     }
 }

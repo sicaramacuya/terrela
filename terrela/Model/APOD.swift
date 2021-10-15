@@ -13,6 +13,18 @@ struct APOD {
     let explanation: String
     let mediaType: String
     let url: URL
+    
+    func formatDate(stringDate: String) -> String {
+        let dateFormatterStringToDate = DateFormatter()
+        dateFormatterStringToDate.dateFormat = "yyyy-MM-dd"
+        
+        let date = dateFormatterStringToDate.date(from: stringDate)
+
+        let dateFormatterDateToString = DateFormatter()
+        dateFormatterDateToString.dateFormat = "MMMM dd, yyyy"
+
+        return dateFormatterDateToString.string(from: date!)
+    }
 }
 
 extension APOD: Decodable {
@@ -23,6 +35,9 @@ extension APOD: Decodable {
         case mediaType = "media_type"
         case url
     }
+    
+    
+    // try JSONDecoder().decode([APOD].self, from: data)
     
     init(from decoder: Decoder) throws {
         // Decode the APOD from the API call

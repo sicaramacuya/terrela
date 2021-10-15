@@ -9,10 +9,20 @@ import UIKit
 
 class PictureVC: UIViewController {
     
+    // MARK: Properties
+    var pictureOfTheDay: APOD? {
+        didSet {
+            guard let picture = self.pictureOfTheDay else { return }
+            
+            self.updateImage(for: picture)
+        }
+    }
+    var previewImageID: UUID?
     lazy var image: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.contentMode = .scaleToFill
+        image.contentMode = .scaleAspectFit
+        image.layer.cornerRadius = 8
         image.clipsToBounds = true
         image.image = UIImage(named: "placeholder")
         
@@ -29,26 +39,8 @@ class PictureVC: UIViewController {
         
         return button
     }()
-    lazy var stackView: UIStackView = {
-        let spacer = UIView()
-        let stackView = UIStackView(arrangedSubviews: [self.image,
-                                                       spacer,
-                                                       self.registerButton
-                                                       ])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.spacing = 16
-        
-        return stackView
-    }()
-    lazy var images: [APOD] = [] {
-      didSet {
-        // feedTableView.reloadData()
-      }
-    }
-    lazy var networkManager: APODService = APODService()
     
-    
+    // MARK: VC Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -61,34 +53,50 @@ class PictureVC: UIViewController {
                                  for: .touchUpInside)
     }
     
+    // MARK: Methods
     private func setup() {
         
         // MARK: View's hierarchy
-        self.view.addSubview(stackView)
+        self.view.addSubview(image)
+        self.view.addSubview(registerButton)
         
         // MARK: Constraints
         let safeArea = self.view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 24),
-            stackView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -24),
-            stackView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 24),
-            stackView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -24),
+
+            image.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
+            image.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0),
+            image.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0),
+            image.heightAnchor.constraint(equalTo: image.widthAnchor),
             
-            registerButton.heightAnchor.constraint(equalToConstant: 50)
+            registerButton.heightAnchor.constraint(equalToConstant: 50),
+            registerButton.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -24),
+            registerButton.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 24),
+            registerButton.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -24)
         ])
     }
     
-    @objc private func presentModalController() {
-        self.navigationController?.present(PictureDetailsVC(), animated: true)
-        
-        
-        networkManager.getPictureOfTheDay { result in
-            switch result {
-            case let .success(images):
-              self.images = images
-            case let .failure(error):
-              print(error)
+    private func updateImage(for pictureOfTheDay: APOD) {
+        let previewImageID = UUID()
+        self.previewImageID = previewImageID
+        DispatchQueue.global().async { [weak self] in
+            guard let data = try? Data(contentsOf: pictureOfTheDay.url) else { return }
+            
+            let image = UIImage(data: data)
+            
+            guard let self = self else { return }
+            guard self.previewImageID == previewImageID else { return }
+            
+            DispatchQueue.main.async {
+                self.image.image = image
             }
         }
+    }
+    
+    @objc private func presentModalController() {
+        let vc = PictureDetailsVC()
+        vc.pictureOfTheDay = self.pictureOfTheDay
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: false)
     }
 }

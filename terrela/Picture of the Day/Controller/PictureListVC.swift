@@ -8,12 +8,6 @@
 import UIKit
 
 class PictureListVC: UIViewController {
-
-    lazy var testingTitles: [String] = ["Astronaut Akihiko Hoshide Conducts DNA Sequencing Aboard Station",
-                                   "Liftoff of Landsat 9",
-                                   "The Double Cluster in Perseus",
-                                   "Baffin Bay, Greenland A Historical Perspective",
-                                   "Saturn at Night"]
     
     // MARK: Properties
     lazy var table: UITableView = {
@@ -23,6 +17,12 @@ class PictureListVC: UIViewController {
         
         return table
     }()
+    lazy var picturesOfTheDay: [APOD] = [] {
+        didSet {
+            table.reloadData()
+        }
+    }
+    lazy var networkManager = APODService()
     
     // MARK: VC Lifecycle
     override func viewDidLoad() {
@@ -68,7 +68,14 @@ class PictureListVC: UIViewController {
     }
     
     private func updateList() {
-        
+        networkManager.getPictureOfTheDay { result in
+            switch result {
+            case let .success(picturesOfTheDay):
+                self.picturesOfTheDay = picturesOfTheDay.reversed()
+            case let .failure(error):
+                print(error)
+            }
+        }
     }
     
     private func setSearchBar() {
@@ -82,14 +89,13 @@ class PictureListVC: UIViewController {
 
 extension PictureListVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return picturesOfTheDay.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PictureCell.identifier, for: indexPath) as! PictureCell
-        
-        
-        cell.titleLabel.text = testingTitles[indexPath.row]
+        let picture = picturesOfTheDay[indexPath.row]
+        cell.pictureOfTheDay = picture
         
         return cell
     }
@@ -102,7 +108,9 @@ extension PictureListVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("Row \(indexPath.row) selected.")
-        let detailVC = PictureVC()
-        self.navigationController?.pushViewController(detailVC, animated: true)
+        let pictureVC = PictureVC()
+        pictureVC.pictureOfTheDay = picturesOfTheDay[indexPath.row]
+        
+        self.navigationController?.pushViewController(pictureVC, animated: true)
     }
 }
