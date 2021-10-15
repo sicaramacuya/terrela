@@ -1,5 +1,5 @@
 //
-//  Data.swift
+//  Category.swift
 //  terrela
 //
 //  Created by Eric Morales on 7/14/21.

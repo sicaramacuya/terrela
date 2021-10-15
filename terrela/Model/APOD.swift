@@ -36,9 +36,6 @@ extension APOD: Decodable {
         case url
     }
     
-    
-    // try JSONDecoder().decode([APOD].self, from: data)
-    
     init(from decoder: Decoder) throws {
         // Decode the APOD from the API call
         let apodContainer = try decoder.container(keyedBy: APODKeys.self)

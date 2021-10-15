@@ -24,6 +24,11 @@ class PictureListVC: UIViewController {
     }
     lazy var networkManager = APODService()
     
+    // TESTING
+    lazy var rockets: [Rocket] = []
+    lazy var missions: [Mission] = []
+    lazy var networkManagerLLS = LaunchLibraryService()
+    
     // MARK: VC Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,6 +79,29 @@ class PictureListVC: UIViewController {
                 self.picturesOfTheDay = picturesOfTheDay.reversed()
             case let .failure(error):
                 print(error)
+            }
+        }
+        
+        
+        
+        // TESTING
+        networkManagerLLS.getMissions { result in
+            switch result {
+            case .success(let missions):
+                self.missions = missions
+            case .failure(let error):
+                print(error)
+                print("Error occured with getting the missions.")
+            }
+        }
+        
+        networkManagerLLS.getRockets { result in
+            switch result {
+            case .success(let rockets):
+                self.rockets = rockets
+            case .failure(let error):
+                print(error)
+                print("Error occured with getting the rockets.")
             }
         }
     }
