@@ -49,7 +49,7 @@ class PictureListVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        self.title = "Picture of the Day"
+        self.title = self.category?.displayName()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
