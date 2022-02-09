@@ -4,31 +4,17 @@ Terrela is an iOS application that let users expand their knowledge about space.
 
 Terrela aims to be powerful enough to answer any space related question. Additionaly, it aspires to be accessible enough that bypass the hardwork of searching about any topic.
 
+## Tech Stack
+
+**Language:** Swift
+
+**User Interface:** UIKit, CollectionView, TableView, Autolayout
+
+**Dynamic Components:** Custom Networking Layer
 
 ## Demo
 
-![Demo v0.1](https://user-images.githubusercontent.com/69913812/125712133-3c11bd2a-296d-41bc-9280-3507bffc7c76.gif)
+![Demo - Terrela](https://user-images.githubusercontent.com/69913812/153265249-a4780d04-b15d-446d-9ca7-6fe8d66c9fe5.gif)
 
-  
-## 🛠 Skills 
-* Swift 
-* UIKit
-  
-## Lessons Learn
-
-Over the course of building this project I have strengthen my understanding UIKit and its components.
-
-**V0.1**
-
-In this version specially I strengthen my knowledge using custom buttons and the UICollectionView. Also, I learn the importance of setting views programatically in a specific order. 
-
-The orders is as follow:
-
-    1. Instantiate the view class.
-    2. Set `translatesAutoresizingMaskIntoConstraints` attribute to false.
-    3. Add the view object to the hierarchy.
-    4. Add any constraints.
-
-
-
-
+## Try the App
+This app is not yet on the App Store or TestFlight but its possible to download the zip file and run the project by opening `terrela.xcodeproj`.
