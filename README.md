@@ -16,5 +16,27 @@ Terrela aims to be powerful enough to answer any space related question. Additio
 
 ![Demo - Terrela](https://user-images.githubusercontent.com/69913812/153265249-a4780d04-b15d-446d-9ca7-6fe8d66c9fe5.gif)
 
-## Try the App
-This app is not yet on the App Store or TestFlight but its possible to download the zip file and run the project by opening `terrela.xcodeproj`.
+
+## Run Locally
+Because this app is not yer on the App Store or TestFlight this are two possible ways of running it locally.
+
+### Cloning Repository
+Clone the project
+
+```bash
+  git clone https://github.com/sicaramacuya/terrela.git
+```
+
+Go to the project directory
+
+```bash
+  cd terrela
+```
+
+Open project
+
+```bash
+  open terrela.xcodeproj
+```
+### Zip File
+Download the Zip file under the green *Code* button. After downloading run the project by opening `terrela.xcodeproj`.
